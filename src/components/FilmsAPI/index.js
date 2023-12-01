@@ -1,3 +1,3 @@
-import FilmsAPI from "./FilmsAPI";
+import FilmsAPI from './FilmsAPI';
 
 export default FilmsAPI;

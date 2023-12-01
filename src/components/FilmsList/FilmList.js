@@ -1,22 +1,13 @@
-import { Component } from "react";
-import "./FIlmList.css";
-import FilmCard from "../FilmCard";
-import Spinner from "../Spinner";
-import ErrorPage from "../ErrorPage";
-import Pagination from "../Pagination";
+import { Component } from 'react';
+import './FIlmList.css';
+import FilmCard from '../FilmCard';
+import Spinner from '../Spinner';
+import ErrorPage from '../ErrorPage';
+import Pagination from '../Pagination';
 
 export default class FilmList extends Component {
   render() {
-    const {
-      list,
-      error,
-      isLoading,
-      page,
-      totalResults,
-      onPageChanged,
-      guestSessionID,
-      genresList,
-    } = this.props;
+    const { list, error, isLoading, page, totalResults, onPageChanged, guestSessionID, genresList } = this.props;
 
     const filmsList = list.map((el) => (
       <FilmCard
@@ -39,13 +30,7 @@ export default class FilmList extends Component {
         <ul className="filmlist">
           {error ? <ErrorPage /> : null}
           {isLoading ? <Spinner /> : filmsList}
-          {error ? null : (
-            <Pagination
-              page={page}
-              totalResults={totalResults}
-              onPageChanged={onPageChanged}
-            />
-          )}
+          {error ? null : <Pagination page={page} totalResults={totalResults} onPageChanged={onPageChanged} />}
         </ul>
       </div>
     );

@@ -1,10 +1,10 @@
-import React, { Component } from "react";
-import "./SearchBar.css";
-import { Input } from "antd";
+import React, { Component } from 'react';
+import './SearchBar.css';
+import { Input } from 'antd';
 
 export default class SearchBar extends Component {
   state = {
-    input: "",
+    input: '',
   };
 
   onInputChange = (e) => {
@@ -22,12 +22,7 @@ export default class SearchBar extends Component {
   render() {
     return (
       <div className="searchbar-wrapper">
-        <Input
-          onKeyUp={this.onInputChange}
-          placeholder="Type to search..."
-          bordered
-          className="searchbar"
-        />
+        <Input onKeyUp={this.onInputChange} placeholder="Type to search..." bordered className="searchbar" />
       </div>
     );
   }

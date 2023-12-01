@@ -1,10 +1,10 @@
-import { Component } from "react";
-import "./App.css";
-import Header from "../Header";
-import SearchBar from "../SearchBar";
-import FilmList from "../FilmsList";
-import FilmsAPI from "../FilmsAPI";
-import { debounce } from "lodash";
+import { Component } from 'react';
+import './App.css';
+import Header from '../Header';
+import SearchBar from '../SearchBar';
+import FilmList from '../FilmsList';
+import FilmsAPI from '../FilmsAPI';
+import { debounce } from 'lodash';
 
 function cutFilmList(arr, Number) {
   if (arr.length > Number) {
@@ -23,11 +23,11 @@ function CutPages(items, Number) {
 
 export default class App extends Component {
   api = new FilmsAPI();
-  cookieName = "MovieDBSession";
+  cookieName = 'MovieDBSession';
 
   state = {
     activeKey: true,
-    value: "",
+    value: '',
     list: [],
     genresList: [],
     ratedList: [],
@@ -40,12 +40,12 @@ export default class App extends Component {
   };
 
   isSearchActive = (key) => {
-    if (key === "Search") {
+    if (key === 'Search') {
       this.setState({
         activeKey: true,
       });
     }
-    if (key === "Rated") {
+    if (key === 'Rated') {
       this.setState({
         activeKey: false,
       });
@@ -172,18 +172,8 @@ export default class App extends Component {
   }
 
   render() {
-    const {
-      list,
-      error,
-      isLoading,
-      page,
-      ratedPage,
-      totalResults,
-      genresList,
-      value,
-      guestSessionID,
-      activeKey,
-    } = this.state;
+    const { list, error, isLoading, page, ratedPage, totalResults, genresList, value, guestSessionID, activeKey } =
+      this.state;
     return (
       <>
         <Header
@@ -192,9 +182,7 @@ export default class App extends Component {
           value={value}
           getList={this.getList}
         />
-        {activeKey ? (
-          <SearchBar onValueChange={debounce(this.onValueChange, 600)} />
-        ) : null}
+        {activeKey ? <SearchBar onValueChange={debounce(this.onValueChange, 600)} /> : null}
 
         <FilmList
           genresList={genresList}

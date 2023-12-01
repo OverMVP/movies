@@ -1,9 +1,10 @@
-import { Component } from "react";
-import "./FilmCard.css";
-import { Rate } from "antd";
-import format from "date-fns/format";
-import { nanoid } from "nanoid";
-import FilmsAPI from "../FilmsAPI";
+import { Component } from 'react';
+import './FilmCard.css';
+import { Rate } from 'antd';
+import format from 'date-fns/format';
+import { nanoid } from 'nanoid';
+
+import FilmsAPI from '../FilmsAPI';
 
 function filterGenres(list, ids) {
   return list.reduce((acc, el) => {
@@ -23,15 +24,15 @@ function formatWithDateFns(dateString) {
   // The Prop format is "2023-06-24" ("yyyy-mm-dd"). I split it on "-". Then I fix the array of values to make
   // it the right format for date-fns function called format() which only takes numbers(see: https://date-fns.org/v2.16.1/docs/format),
   // that's why we convert every element of arr to a number. Btw Number(05) -> 5
-  const datesArr = dateString.split("-");
+  const datesArr = dateString.split('-');
   const fixedDatesArr = datesArr.map((el) => Number(el));
-  return format(new Date(...fixedDatesArr), "d MMM yyyy");
+  return format(new Date(...fixedDatesArr), 'd MMM yyyy');
 }
 
 function getRatingColor(value) {
   let color;
 
-  const colors = ["#E90000", "#E97E00", "#E9D100", "#66E900"];
+  const colors = ['#E90000', '#E97E00', '#E9D100', '#66E900'];
 
   if (value >= 0 && value < 3) {
     color = colors[0];
@@ -56,9 +57,20 @@ function getRatingColor(value) {
 
 export default class FilmCard extends Component {
   api = new FilmsAPI();
+
   state = {
     starsValue: null,
   };
+
+  #imgURL = `https://image.tmdb.org/t/p/original${this.props.imgsource}`;
+
+  popularity = this.props.rating.toFixed(1);
+
+  componentDidUpdate(_, prevState) {
+    if (prevState.starsValue !== this.state.starsValue) {
+      this.api.addRating(this.state.starsValue, this.props.guestSessionID, this.props.movieID);
+    }
+  }
 
   onValueChanged = (value) => {
     this.setState({
@@ -66,19 +78,6 @@ export default class FilmCard extends Component {
     });
     sessionStorage.setItem(this.props.movieID, value);
   };
-
-  componentDidUpdate(_, prevState) {
-    if (prevState.starsValue !== this.state.starsValue) {
-      this.api.addRating(
-        this.state.starsValue,
-        this.props.guestSessionID,
-        this.props.movieID
-      );
-    }
-  }
-
-  #imgURL = `https://image.tmdb.org/t/p/original${this.props.imgsource}`;
-  popularity = this.props.rating.toFixed(1);
 
   render() {
     const { title, overview, genresList, itemGenres, releaseDate } = this.props;
@@ -97,12 +96,7 @@ export default class FilmCard extends Component {
 
     return (
       <li className="filmcard">
-        <img
-          className="filmcard-image"
-          src={this.#imgURL}
-          loading="lazy"
-          alt=""
-        />
+        <img className="filmcard-image" src={this.#imgURL} loading="lazy" alt="" />
         <div className="description">
           <div className="rating" style={getRatingColor(this.popularity)}>
             <span>{this.popularity}</span>
@@ -114,7 +108,7 @@ export default class FilmCard extends Component {
           <Rate
             onChange={this.onValueChanged}
             className="star-rating"
-            defaultValue={rate ? rate : 0}
+            defaultValue={rate || 0}
             count={10}
             style={{ fontSize: 16 }}
           />

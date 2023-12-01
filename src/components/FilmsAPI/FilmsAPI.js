@@ -1,18 +1,18 @@
 export default class FilmsAPI {
   #authToken =
-    "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NWI1Y2ZlNDQ5N2I4ZDAzMjExM2EzMTBkNWM4YmY0NyIsInN1YiI6IjY1NjQ1YjE1ZDk1NTRiMDBlMzFmOWI4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MemMacEcv6iQypWOhduHhFQonCdInv4fFGXJ9RWrnDQ";
+    'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI4NWI1Y2ZlNDQ5N2I4ZDAzMjExM2EzMTBkNWM4YmY0NyIsInN1YiI6IjY1NjQ1YjE1ZDk1NTRiMDBlMzFmOWI4MSIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.MemMacEcv6iQypWOhduHhFQonCdInv4fFGXJ9RWrnDQ';
 
   #options = {
-    method: "GET",
+    method: 'GET',
     headers: {
-      accept: "application/json",
+      accept: 'application/json',
       Authorization: this.#authToken,
     },
   };
 
-  async getFilmsBySearch(searchValue = "", page = 1) {
+  async getFilmsBySearch(searchValue = '', page = 1) {
     let URL;
-    if (searchValue === "") {
+    if (searchValue === '') {
       URL = `https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=${page}`;
     } else
       URL = `https://api.themoviedb.org/3/search/movie?query=${searchValue}&include_adult=true&language=en-US&page=${page}`;
@@ -27,14 +27,14 @@ export default class FilmsAPI {
   }
 
   async addRating(starsValue, guestSessionId, movieId) {
-    const token = "85b5cfe4497b8d032113a310d5c8bf47";
+    const token = '85b5cfe4497b8d032113a310d5c8bf47';
 
     console.log(starsValue);
     const options = {
-      method: "POST",
+      method: 'POST',
       headers: {
-        accept: "application/json",
-        "Content-Type": "application/json;charset=utf-8",
+        accept: 'application/json',
+        'Content-Type': 'application/json;charset=utf-8',
       },
       body: JSON.stringify({ value: starsValue }),
     };
@@ -50,11 +50,11 @@ export default class FilmsAPI {
   }
 
   async getRatedMovies(guestSessionId, page = 1) {
-    const token = "85b5cfe4497b8d032113a310d5c8bf47";
+    const token = '85b5cfe4497b8d032113a310d5c8bf47';
     const options = {
-      method: "GET",
+      method: 'GET',
       headers: {
-        accept: "application/json",
+        accept: 'application/json',
         Authorization: token,
       },
     };
