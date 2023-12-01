@@ -1,0 +1,10 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 25px;
+  justify-content: center;
+  align-items: center;
+  font-size: 20px;
+  text-transform: uppercase;
+}

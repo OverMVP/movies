@@ -1,0 +1,8 @@
+.searchbar {
+  max-width: 1024px;
+}
+
+.searchbar-wrapper {
+  display: flex;
+  justify-content: center;
+}

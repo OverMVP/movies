@@ -1,0 +1,21 @@
+.filmlist {
+  padding: 36px 36px 0 36px;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 1024px;
+  align-self: center;
+  gap: 24px;
+  justify-content: center;
+  border-radius: 25px;
+  margin-bottom: 24px;
+  margin-top: 25px;
+  background: linear-gradient();
+  box-shadow: 0 8px 25px 0 rgba(31, 38, 135, 0.171);
+}
+
+.filmlist-wrapper {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 100%;
+}

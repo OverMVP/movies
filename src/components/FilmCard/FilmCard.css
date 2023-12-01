@@ -1,0 +1,78 @@
+.filmcard {
+  display: flex;
+  max-width: 454px;
+  height: 281px;
+  background: rgba(255, 255, 255, 0.35);
+  box-shadow: 0 8px 25px 0 rgba(31, 38, 135, 0.171);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border-radius: 15px;
+  flex-grow: 1;
+}
+
+.filmcard-image {
+  opacity: 0.95;
+  background-color: #0d0d0e;
+  width: 40%;
+  border-radius: 15px 0 0 15px;
+}
+
+.description {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 10px 20px 0px 20px;
+  width: 60%;
+  gap: 7px;
+}
+
+.filmcard-title {
+  display: flex;
+  font-size: 22px;
+  width: 80%;
+}
+
+.rating {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 10px;
+  right: 9px;
+  border: 3px solid;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.genre {
+  display: flex;
+  color: rgb(54, 54, 54);
+  padding: 5px;
+  height: 20px;
+  font-size: 0.75rem;
+  justify-content: center;
+  align-items: center;
+  border: 1px solid #d9d9d9;
+  background-color: #fafafa;
+  border-radius: 2px;
+  flex-shrink: 1;
+}
+
+.release-data {
+  color: #827e7e;
+  font-size: 12px;
+}
+
+.star-rating {
+  margin-top: auto;
+  margin-bottom: 16px;
+}
+
+.genres {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
