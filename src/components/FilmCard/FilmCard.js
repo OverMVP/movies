@@ -8,7 +8,10 @@ import FilmsAPI from '../FilmsAPI';
 
 function filterGenres(list, ids) {
   return list.reduce((acc, el) => {
-    if (ids.includes(el.id)) acc = [...acc, el];
+    if (ids.includes(el.id)) {
+      const arr = [...acc, el];
+      return arr;
+    }
     return acc;
   }, []);
 }
@@ -76,7 +79,7 @@ export default class FilmCard extends Component {
     this.setState({
       starsValue: value,
     });
-    sessionStorage.setItem(this.props.movieID, value);
+    localStorage.setItem(this.props.movieID, value);
   };
 
   render() {
@@ -92,7 +95,7 @@ export default class FilmCard extends Component {
     const shortDescription = validateDescription(overview, 110);
     const shortenedTitle = validateDescription(title, 30);
     const date = formatWithDateFns(releaseDate);
-    const rate = sessionStorage.getItem(this.props.movieID);
+    const rate = localStorage.getItem(this.props.movieID);
 
     return (
       <li className="filmcard">

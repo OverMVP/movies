@@ -1,10 +1,11 @@
 import { Component } from 'react';
+import { debounce } from 'lodash';
+
 import './App.css';
 import Header from '../Header';
 import SearchBar from '../SearchBar';
 import FilmList from '../FilmsList';
 import FilmsAPI from '../FilmsAPI';
-import { debounce } from 'lodash';
 
 function cutFilmList(arr, Number) {
   if (arr.length > Number) {
@@ -14,15 +15,17 @@ function cutFilmList(arr, Number) {
 }
 
 function CutPages(items, Number) {
+  let pages = items;
   if (items > Number) {
-    items = Number;
-    return items;
+    pages = Number;
+    return pages;
   }
-  return items;
+  return pages;
 }
 
 export default class App extends Component {
   api = new FilmsAPI();
+
   cookieName = 'MovieDBSession';
 
   state = {
@@ -39,21 +42,28 @@ export default class App extends Component {
     ratedPage: 1,
   };
 
-  isSearchActive = (key) => {
-    if (key === 'Search') {
-      this.setState({
-        activeKey: true,
-      });
-    }
-    if (key === 'Rated') {
-      this.setState({
-        activeKey: false,
-      });
-    }
-  };
+  componentDidMount() {
+    this.getList(this.state.value);
+    this.getGenres();
+    this.getGuestSessionId();
+  }
 
-  onError(err) {
-    this.setState(({ error }) => {
+  componentDidUpdate(_, prevState) {
+    if (this.state.page !== prevState.page) {
+      this.getList(this.state.value);
+    }
+    if (this.state.value !== prevState.value) {
+      this.getList(this.state.value);
+    }
+
+    if (this.state.activeKey !== prevState.activeKey) {
+      if (this.state.activeKey === false) this.getRatedList();
+      if (this.state.activeKey === true) this.getList();
+    }
+  }
+
+  onError() {
+    this.setState(() => {
       return {
         error: true,
         isLoading: false,
@@ -61,39 +71,6 @@ export default class App extends Component {
       };
     });
   }
-
-  onValueChange = (value) => {
-    this.setState({
-      value: value,
-      page: 1,
-    });
-  };
-
-  getList = (value) => {
-    this.setState(({ isLoading }) => {
-      return {
-        isLoading: !isLoading,
-        error: false,
-      };
-    });
-
-    this.api
-      .getFilmsBySearch(value, this.state.page)
-      .then((body) => {
-        if (body.total_results > 0) {
-          return this.setState(({ isLoading }) => {
-            return {
-              list: cutFilmList(body.results, 500),
-              isLoading: !isLoading,
-              totalResults: CutPages(body.total_results, 10000),
-              page: body.page,
-              error: false,
-            };
-          });
-        } else throw Error();
-      })
-      .catch((err) => this.onError(err));
-  };
 
   getRatedList = () => {
     this.setState(({ isLoading }) => {
@@ -116,7 +93,8 @@ export default class App extends Component {
               error: false,
             };
           });
-        } else throw Error();
+        }
+        throw Error();
       })
       .catch((err) => this.onError(err));
   };
@@ -145,31 +123,58 @@ export default class App extends Component {
     }
   }
 
+  isSearchActive = (key) => {
+    if (key === 'Search') {
+      this.setState({
+        activeKey: true,
+      });
+    }
+    if (key === 'Rated') {
+      this.setState({
+        activeKey: false,
+      });
+    }
+  };
+
   onPageChanged = (page) => {
     this.setState({
-      page: page,
+      page,
     });
   };
 
-  componentDidMount() {
-    this.getList(this.state.value);
-    this.getGenres();
-    this.getGuestSessionId();
-  }
+  getList = (value) => {
+    this.setState(({ isLoading }) => {
+      return {
+        isLoading: !isLoading,
+        error: false,
+      };
+    });
 
-  componentDidUpdate(_, prevState) {
-    if (this.state.page !== prevState.page) {
-      this.getList(this.state.value);
-    }
-    if (this.state.value !== prevState.value) {
-      this.getList(this.state.value);
-    }
+    this.api
+      .getFilmsBySearch(value, this.state.page)
+      .then((body) => {
+        if (body.total_results > 0) {
+          return this.setState(({ isLoading }) => {
+            return {
+              list: cutFilmList(body.results, 500),
+              isLoading: !isLoading,
+              totalResults: CutPages(body.total_results, 10000),
+              page: body.page,
+              error: false,
+            };
+          });
+        }
+        throw Error();
+      })
+      .catch((err) => this.onError(err));
+  };
 
-    if (this.state.activeKey !== prevState.activeKey) {
-      if (this.state.activeKey === false) this.getRatedList();
-      if (this.state.activeKey === true) this.getList();
-    }
-  }
+  onValueChange = (value) => {
+    this.setState({
+      value,
+      page: 1,
+    });
+  };
 
   render() {
     const { list, error, isLoading, page, ratedPage, totalResults, genresList, value, guestSessionID, activeKey } =

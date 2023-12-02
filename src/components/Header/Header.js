@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import './Header.css';
-
 import { Tabs } from 'antd';
 
 const items = [
@@ -23,7 +22,7 @@ export default class Header extends Component {
     if (activeKey === 'Search') {
       this.setState(() => {
         return {
-          activeKey: activeKey,
+          activeKey,
         };
       });
       this.props.isSearchActive(activeKey);
@@ -33,8 +32,6 @@ export default class Header extends Component {
       this.props.isSearchActive(activeKey);
     }
   };
-
-  componentDidUpdate(_, prevState) {}
 
   render() {
     return (

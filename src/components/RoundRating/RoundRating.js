@@ -1,7 +1,3 @@
-import { Component } from 'react';
-
-export default class RoundRating extends Component {
-  render() {
-    return <div>Круговой рейтинг</div>;
-  }
+export default function RoundRating() {
+  return <div>Круговой рейтинг</div>;
 }

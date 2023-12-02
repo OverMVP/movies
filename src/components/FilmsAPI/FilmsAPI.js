@@ -17,19 +17,20 @@ export default class FilmsAPI {
     } else
       URL = `https://api.themoviedb.org/3/search/movie?query=${searchValue}&include_adult=true&language=en-US&page=${page}`;
     const getResource = await fetch(URL, this.#options);
-    return await getResource.json();
+    const res = await getResource.json();
+    return res;
   }
 
   async getGenresArr() {
-    const URL = `https://api.themoviedb.org/3/genre/movie/list?language=en`;
+    const URL = 'https://api.themoviedb.org/3/genre/movie/list?language=en';
     const getResource = await fetch(URL, this.#options);
-    return await getResource.json();
+    const res = await getResource.json();
+    return res;
   }
 
   async addRating(starsValue, guestSessionId, movieId) {
     const token = '85b5cfe4497b8d032113a310d5c8bf47';
 
-    console.log(starsValue);
     const options = {
       method: 'POST',
       headers: {
@@ -40,13 +41,15 @@ export default class FilmsAPI {
     };
     const URL = `https://api.themoviedb.org/3/movie/${movieId}/rating?api_key=${token}&guest_session_id=${guestSessionId}`;
     const postResource = await fetch(URL, options);
-    return await postResource.json();
+    const res = await postResource.json();
+    return res;
   }
 
   async createGuestSession() {
-    const URL = `https://api.themoviedb.org/3/authentication/guest_session/new`;
+    const URL = 'https://api.themoviedb.org/3/authentication/guest_session/new';
     const getResource = await fetch(URL, this.#options);
-    return await getResource.json();
+    const res = await getResource.json();
+    return res;
   }
 
   async getRatedMovies(guestSessionId, page = 1) {
@@ -60,6 +63,7 @@ export default class FilmsAPI {
     };
     const URL = `https://api.themoviedb.org/3/guest_session/${guestSessionId}/rated/movies?api_key=${token}&&page=${page}`;
     const getList = await fetch(URL, options);
-    return await getList.json();
+    const res = await getList.json();
+    return res;
   }
 }

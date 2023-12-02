@@ -7,17 +7,17 @@ export default class SearchBar extends Component {
     input: '',
   };
 
-  onInputChange = (e) => {
-    this.setState({
-      input: e.target.value,
-    });
-  };
-
   componentDidUpdate(_, prevState) {
     if (this.state.input !== prevState.input) {
       this.props.onValueChange(this.state.input);
     }
   }
+
+  onInputChange = (e) => {
+    this.setState({
+      input: e.target.value,
+    });
+  };
 
   render() {
     return (
